@@ -1,0 +1,171 @@
+Advance Java8 Features:
+
+Package:imperativedeclarative
+Imperative Programming: Used mutable object and explicitly programming
+Declarative Programming: Used immutable objects and implicitly programming
+
+-----------------------------------------------------------------------
+Package:lambdas
+Anonymous/unnamed methods
+Used to implement Functional Interface (SAM: Signle Abstraction Method)
+Normally, firstlty function interface must be implemented, later abstract method must be overriden
+but with lambda, the method is directly implemented.
+
+-----------------------------------------------------------------------
+@FunctionaInterface : has one abstarct method
+
+Consumer    -> void accept(T)   - c1.andThen(c2).andThen(c3);
+BiConsumer  -> void accept(T,U)
+
+Predicate   -> boolean test(T)   -- and, or, negate
+BiPredicate -> boolean test(T,U);
+
+Function    -> R apply(T)     andThen, compose
+BiFunction  -> R apply(T,U)
+
+UnaryOperator extend Function<T,T>	// If input and outputs are the same types
+BinaryOperator extend BiFunction<T,T,T>
+
+Supplier    -> T get()
+Comparator  -> int compare(T,T)
+Runnable    -> void run()
+
+-----------------------------------------------------------------------
+MethodReference
+- ClassName::instance-methodName
+- ClassName::static-methodName
+- Instance::methodName
+Classname::new		(Class icerisinde eslesen constructor olmali)
+
+
+-----------------------------------------------------------------------
+STREAMS
+definitions: sequence of elements which can be created out of collections
+
+Terminal operation metodlari cagrilana kadar hic bir intermediate method cagrilmaz
+
+Collections: eagerly constructed & External iteration for(...) {}
+Streams: Lazily constructed & internal iteration
+
+Stream uzerinde eger terminal operation gerceklesmizse, o stream tekrardan kullanilamaz, yaratilmasi gerekir.
+Collectionlar uzerinden tekrar tekrar iteration islemi yapilir
+
+map	-> make transform with apply(T) method.
+flatMap -> Stream icerisinde bir eleman baska elemanlara sahipse bu yontem kullanilir.
+distinct-> Stream'deki sadece unique elemanlari toplar
+count   -> Stream'deki eleman sayisini dondurur. Terminal operation'di
+sorted  -> siralama yapar. reversed ile siralamayi tersine dondurur
+filter  -> Predicate alir, filtreleme yapar
+reduce  -> reduce single value, terminal operation
+limit(n)-> limits number of element to be processed
+skip(n) -> skips "n" element in stream
+
+
+findFirst  - return Optional element with itself
+findAny 
+
+allMatch  -> return boolean
+anyMatch
+noneMatch
+
+----------------------------
+Factory Methods:
+	Stream.of(1,2,3,..)
+	Stream.iterate(1,x->2*x)
+	Stream.generate(Supplier)
+
+----------------------------
+Numeric Streams
+	IntStream.rangeCosed(1,6) or IntStream.range(1,6);
+	LongStream
+	DoubleStream
+
+sum,max,min, average, boxed
+mapToInt
+mapToObj,
+mapToDouble
+mapToLong
+
+
+----------------------------
+Terminal Operations
+
+forEach
+min
+max
+reduce
+collect
+joining: String concat operation (Collectors.joining)
+counting: Collectors.counting
+
+mapping: map+collect
+
+maxBy : collect(Collectors.maxBy(Comparators.comparing(methodName)
+minBy
+
+summingInt
+averagingInt
+groupingBy : like SQL grouping
+PartitioningBy
+
+
+----------------------------
+OPTIONAL
+
+avoid nullexception & unnecessary check
+
+ofNullable : wrap a class with null option, not throw an exception
+of	   : throw an exception
+empty
+
+orElse (T)
+orElseGet (Supplier)
+orElseThrow (new Exception)
+
+ifPresent()
+isPresent()
+
+filter
+map
+flatMap : Bir Optional Object diger bir Optional object tasiyorsa bu kullanilir
+
+
+----------------------------
+INTERFACES
+With JAVA8, a method can be defined in interface with 'static' and 'default' keyword
+
+Default: can be overriden, similar to abstract method
+static: cannot be overriden by the implementation
+
+Not: Interface i�erisindeki 'default' metodu ayni class i�erisindeki abstract metoda benzer
+
+Java 8 ile multiply interfe desteklenmektedir.
+
+Comparator: 	naturalOrder
+		ReversedOrder
+		nullsFirst
+		nullsLast
+		comparing
+		
+
+----------------------------
+TIME / DATE API
+
+LocalDate
+LocalTime		// Prior ot Java 8, Date-Calendar library were used
+LocalDateTime
+
+Chronefield
+ChroneUnits
+TemporalAdjuster
+
+Period: LocalDate arasi karsilastirma yapar
+Duration: LocalTime arasi karsilastirma yapar
+Instant: Okunabilir bir format sunar
+ZonedDateTime
+ZoneID
+ZoneOffset
+DateTimeFormatter
+
+Parse	: String to LocalDate-LocalTime-LocalDateTime
+Format  : ... To String
